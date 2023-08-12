@@ -12,6 +12,7 @@
 #include "Matrix44.h"
 #include <memory>
 #include "Skydome.h"
+#include "Ground.h"
 
 /// <summary>
 /// ゲームシーン
@@ -59,5 +60,9 @@ private: // メンバ変数
 	std::unique_ptr<Model> skydomeModel_;
 	std::unique_ptr<Skydome> skydome_;
 	
-	
+	//地面
+	std::unique_ptr<Model> groundModel_;
+	std::unique_ptr<Ground> ground_;
+
+
 };

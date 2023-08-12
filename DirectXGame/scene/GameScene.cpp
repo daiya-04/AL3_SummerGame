@@ -15,9 +15,13 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 
 	skydomeModel_.reset(Model::CreateFromOBJ("skydome", true));
+	groundModel_.reset(Model::CreateFromOBJ("ground", true));
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
+
+	ground_ = std::make_unique<Ground>();
+	ground_->Initialize(groundModel_.get());
 
 }
 
@@ -25,7 +29,7 @@ void GameScene::Update() {
 
 
 	skydome_->Update();
-
+	ground_->Update();
 
 }
 
@@ -58,6 +62,7 @@ void GameScene::Draw() {
 
 
 	skydome_->Draw(viewProjection_);
+	ground_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
