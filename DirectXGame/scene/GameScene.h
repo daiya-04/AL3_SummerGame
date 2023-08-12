@@ -8,6 +8,8 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "Vec3.h"
+#include "Matrix44.h"
 
 /// <summary>
 /// ゲームシーン
