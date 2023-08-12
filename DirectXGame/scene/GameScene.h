@@ -10,6 +10,8 @@
 #include "WorldTransform.h"
 #include "Vec3.h"
 #include "Matrix44.h"
+#include <memory>
+#include "Skydome.h"
 
 /// <summary>
 /// ゲームシーン
@@ -50,4 +52,12 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	
+	ViewProjection viewProjection_;
+
+	//天球
+	std::unique_ptr<Model> skydomeModel_;
+	std::unique_ptr<Skydome> skydome_;
+	
+	
 };
