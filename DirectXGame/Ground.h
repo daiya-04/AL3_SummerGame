@@ -7,7 +7,7 @@
 class Ground {
 private:
 
-	//ワールドトランスフォーム
+	//ワールド変換データ
 	WorldTransform worldTransform_;
 	//モデルデータ
 	Model* model_ = nullptr;

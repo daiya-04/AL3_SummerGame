@@ -11,8 +11,10 @@
 #include "Vec3.h"
 #include "Matrix44.h"
 #include <memory>
+#include <vector>
 #include "Skydome.h"
 #include "Ground.h"
+#include "Player.h"
 
 /// <summary>
 /// ゲームシーン
@@ -45,6 +47,8 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void ModelSet();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -55,6 +59,16 @@ private: // メンバ変数
 	/// </summary>
 	
 	ViewProjection viewProjection_;
+
+	//プレイヤー
+	std::unique_ptr<Player> player_;
+	std::unique_ptr<Model> playerBodyModel_;
+	std::unique_ptr<Model> playerHeadModel_;
+	std::unique_ptr<Model> playerL_armModel_;
+	std::unique_ptr<Model> playerR_armModel_;
+
+	//敵
+
 
 	//天球
 	std::unique_ptr<Model> skydomeModel_;

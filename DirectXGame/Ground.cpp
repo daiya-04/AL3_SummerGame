@@ -12,7 +12,7 @@ void Ground::Initialize(Model* model) {
 
 void Ground::Update() {
 
-	worldTransform_.translation_ = {0.0f, -5.0f, 0.0f};
+	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
 
 	worldTransform_.UpdateMatrix();
 }

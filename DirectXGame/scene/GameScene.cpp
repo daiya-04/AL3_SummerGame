@@ -14,8 +14,15 @@ void GameScene::Initialize() {
 
 	viewProjection_.Initialize();
 
-	skydomeModel_.reset(Model::CreateFromOBJ("skydome", true));
-	groundModel_.reset(Model::CreateFromOBJ("ground", true));
+
+	ModelSet();
+	
+	player_ = std::make_unique<Player>();
+	std::vector<Model*> playerModels = {
+	    playerBodyModel_.get(),playerHeadModel_.get(),
+	    playerL_armModel_.get(),playerR_armModel_.get(),
+	};
+	player_->Initialize(playerModels);
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
@@ -27,7 +34,7 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
-
+	player_->Update();
 	skydome_->Update();
 	ground_->Update();
 
@@ -60,7 +67,7 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 
-
+	player_->Draw(viewProjection_);
 	skydome_->Draw(viewProjection_);
 	ground_->Draw(viewProjection_);
 
@@ -80,4 +87,16 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::ModelSet() {
+
+	skydomeModel_.reset(Model::CreateFromOBJ("skydome", true));
+	groundModel_.reset(Model::CreateFromOBJ("ground", true));
+
+	playerBodyModel_.reset(Model::CreateFromOBJ("float_Body", true));
+	playerHeadModel_.reset(Model::CreateFromOBJ("float_Head", true));
+	playerL_armModel_.reset(Model::CreateFromOBJ("float_L_Arm", true));
+	playerR_armModel_.reset(Model::CreateFromOBJ("float_R_Arm", true));
+
 }
