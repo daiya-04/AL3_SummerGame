@@ -19,4 +19,6 @@ public:
 
 	void Draw(const ViewProjection& viewProjection) override;
 
+	void ApplyGlobalVariables();
+
 };

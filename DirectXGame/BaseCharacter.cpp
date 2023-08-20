@@ -7,6 +7,8 @@ void BaseCharacter::Initialize(const std::vector<Model*>& models) {
 	models_ = models;
 	worldTransformBase_.Initialize();
 	worldTransformBody_.Initialize();
+
+	worldTransformBody_.parent_ = &GetWorlfTransformBase();
 }
 
 void BaseCharacter::Update() {

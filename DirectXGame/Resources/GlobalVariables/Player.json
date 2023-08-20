@@ -1,0 +1,19 @@
+{
+    "Player": {
+        "ArmL Translation": [
+            -2.0,
+            5.0,
+            0.0
+        ],
+        "ArmR Translation": [
+            2.0,
+            5.0,
+            0.0
+        ],
+        "Head Translation": [
+            0.0,
+            6.0,
+            0.0
+        ]
+    }
+}
