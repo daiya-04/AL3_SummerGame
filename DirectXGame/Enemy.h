@@ -1,20 +1,13 @@
-﻿#pragma once
+#pragma once
+#include "BaseCharacter.h"
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
-#include "BaseCharacter.h"
-#include "Input.h"
 #include "Vec3.h"
 #include "Matrix44.h"
 
-class Player : public BaseCharacter {
+class Enemy : public BaseCharacter {
 private:
-
-	WorldTransform worldTransformHead_;
-	WorldTransform worldTransformL_Arm_;
-	WorldTransform worldTransformR_Arm_;
-
-	Vec3 rotate;
 
 public:
 

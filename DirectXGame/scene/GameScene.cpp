@@ -24,6 +24,10 @@ void GameScene::Initialize() {
 	};
 	player_->Initialize(playerModels);
 
+	enemy_ = std::make_unique<Enemy>();
+	std::vector<Model*> enemyModels = {enemyBodyModel_.get()};
+	enemy_->Initialize(enemyModels);
+
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
 
@@ -35,6 +39,7 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 
 	player_->Update();
+	enemy_->Update();
 	skydome_->Update();
 	ground_->Update();
 
@@ -68,6 +73,7 @@ void GameScene::Draw() {
 	/// </summary>
 
 	player_->Draw(viewProjection_);
+	enemy_->Draw(viewProjection_);
 	skydome_->Draw(viewProjection_);
 	ground_->Draw(viewProjection_);
 
@@ -98,5 +104,7 @@ void GameScene::ModelSet() {
 	playerHeadModel_.reset(Model::CreateFromOBJ("float_Head", true));
 	playerL_armModel_.reset(Model::CreateFromOBJ("float_L_Arm", true));
 	playerR_armModel_.reset(Model::CreateFromOBJ("float_R_Arm", true));
+
+	enemyBodyModel_.reset(Model::CreateFromOBJ("EnemyBody", true));
 
 }

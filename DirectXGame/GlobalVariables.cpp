@@ -53,7 +53,7 @@ void GlobalVariables::Update() {
 				// Vec3型の値を保持していれば
 			} else if (std::holds_alternative<Vec3>(item)) {
 				Vec3* ptr = std::get_if<Vec3>(&item);
-				ImGui::SliderFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), -10.0f, 10.0f);
+				ImGui::DragFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), 0.01f);
 			}
 		}
 

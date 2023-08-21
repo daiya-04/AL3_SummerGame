@@ -3,6 +3,8 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include <vector>
+#include "Vec3.h"
+#include "Matrix44.h"
 
 class BaseCharacter {
 protected:
