@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include "GlobalVariables.h"
+#include <cmath>
 
 
 void Player::Initialize(const std::vector<Model*>& models) {
@@ -14,6 +15,8 @@ void Player::Initialize(const std::vector<Model*>& models) {
 	worldTransformL_Arm_.Initialize();
 	worldTransformR_Arm_.Initialize();
 
+	rotate = {};
+
 	globalVariables->AddItem(groupName, "Head Translation", worldTransformHead_.translation_);
 	globalVariables->AddItem(groupName, "ArmL Translation", worldTransformL_Arm_.translation_);
 	globalVariables->AddItem(groupName, "ArmR Translation", worldTransformR_Arm_.translation_);
@@ -27,6 +30,27 @@ void Player::Initialize(const std::vector<Model*>& models) {
 void Player::Update() {
 
 	ApplyGlobalVariables();
+
+	XINPUT_STATE joyState;
+
+	Vec3 move{};
+	const float kSpeed = 0.3f;
+	Vec3 zeroVector{};
+
+	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
+
+		move = {(float)joyState.Gamepad.sThumbLX, 0.0f, (float)joyState.Gamepad.sThumbLY};
+		move = move / SHRT_MAX * kSpeed;
+
+		worldTransformBase_.translation_ += move;
+
+		if (move != zeroVector) {
+			rotate = move;
+		}
+
+		worldTransformBase_.rotation_.y = std::atan2(rotate.x, rotate.z);
+
+	}
 
 
 	BaseCharacter::Update();

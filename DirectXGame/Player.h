@@ -3,6 +3,7 @@
 #include "WorldTransform.h"
 #include "ViewProjection.h"
 #include "BaseCharacter.h"
+#include "Input.h"
 
 class Player : public BaseCharacter {
 private:
@@ -10,6 +11,8 @@ private:
 	WorldTransform worldTransformHead_;
 	WorldTransform worldTransformL_Arm_;
 	WorldTransform worldTransformR_Arm_;
+
+	Vec3 rotate;
 
 public:
 
