@@ -7,6 +7,9 @@
 #include "Vec3.h"
 #include "Matrix44.h"
 
+class GameScene;
+class Enemy;
+
 class Player : public BaseCharacter {
 private:
 
@@ -15,6 +18,12 @@ private:
 	WorldTransform worldTransformR_Arm_;
 
 	Vec3 rotate;
+
+	int coolTime = 60;
+	int coolTimer = 0;
+
+	GameScene* gameScene_ = nullptr;
+	Enemy* enemy_ = nullptr;
 
 public:
 
@@ -25,5 +34,10 @@ public:
 	void Draw(const ViewProjection& viewProjection) override;
 
 	void ApplyGlobalVariables();
+
+	void Attack();
+
+	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
+	void SetEnemy(Enemy* enemy) { enemy_ = enemy; }
 
 };

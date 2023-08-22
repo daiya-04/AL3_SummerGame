@@ -23,10 +23,13 @@ void GameScene::Initialize() {
 	    playerL_armModel_.get(),playerR_armModel_.get(),
 	};
 	player_->Initialize(playerModels);
+	player_->SetGameScene(this);
 
 	enemy_ = std::make_unique<Enemy>();
 	std::vector<Model*> enemyModels = {enemyBodyModel_.get()};
 	enemy_->Initialize(enemyModels);
+
+	player_->SetEnemy(enemy_.get());
 
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(skydomeModel_.get());
@@ -38,7 +41,18 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
+	playerBullets_.remove_if([](const std::unique_ptr<PlayerBullet>& bullet) {
+		if (bullet->isDead()) {
+			return true;
+		}
+		return false;
+	});
+
 	player_->Update();
+	for (const auto& bullet : playerBullets_) {
+		bullet->Update();
+	}
+	
 	enemy_->Update();
 	skydome_->Update();
 	ground_->Update();
@@ -73,6 +87,9 @@ void GameScene::Draw() {
 	/// </summary>
 
 	player_->Draw(viewProjection_);
+	for (const auto& bullet : playerBullets_) {
+		bullet->Draw(viewProjection_);
+	}
 	enemy_->Draw(viewProjection_);
 	skydome_->Draw(viewProjection_);
 	ground_->Draw(viewProjection_);
@@ -107,4 +124,8 @@ void GameScene::ModelSet() {
 
 	enemyBodyModel_.reset(Model::CreateFromOBJ("EnemyBody", true));
 
+}
+
+void GameScene::AddPlayerBullet(PlayerBullet* playerBullet) {
+	playerBullets_.push_back(std::unique_ptr<PlayerBullet>(playerBullet));
 }

@@ -16,6 +16,8 @@
 #include "Ground.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "PlayerBullet.h"
+#include <list>
 
 /// <summary>
 /// ゲームシーン
@@ -50,6 +52,8 @@ public: // メンバ関数
 
 	void ModelSet();
 
+	void AddPlayerBullet(PlayerBullet* playerBullet);
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -67,6 +71,8 @@ private: // メンバ変数
 	std::unique_ptr<Model> playerHeadModel_;
 	std::unique_ptr<Model> playerL_armModel_;
 	std::unique_ptr<Model> playerR_armModel_;
+
+	std::list<std::unique_ptr<PlayerBullet>> playerBullets_;
 
 	//敵
 	std::unique_ptr<Enemy> enemy_;

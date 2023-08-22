@@ -20,9 +20,9 @@ class ViewProjection {
 public:
 #pragma region ビュー行列の設定
 	// X,Y,Z軸回りのローカル回転角
-	Vec3 rotation_ = {0, 0, 0};
+	Vec3 rotation_ = {0.2f, 0, 0};
 	// ローカル座標
-	Vec3 translation_ = {0, 10, -50};
+	Vec3 translation_ = {0, 30, -130};
 #pragma endregion
 
 #pragma region 射影行列の設定

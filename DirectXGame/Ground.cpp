@@ -6,7 +6,7 @@ void Ground::Initialize(Model* model) {
 	assert(model);
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.scale_ = {50.0f, 50.0f, 50.0f};
+	worldTransform_.scale_ = {15.0f, 15.0f, 15.0f};
 
 }
 

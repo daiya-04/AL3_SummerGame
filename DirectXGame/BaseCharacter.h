@@ -26,4 +26,6 @@ public:
 	const WorldTransform& GetWorlfTransformBase() { return worldTransformBase_; }
 	const WorldTransform& GetWorldTransformBody() { return worldTransformBody_; }
 
+	Vec3 GetWorldPos();
+
 };
