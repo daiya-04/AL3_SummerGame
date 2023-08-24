@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include "Hit.h"
 
 GameScene::GameScene() {}
 
@@ -26,7 +27,7 @@ void GameScene::Initialize() {
 	player_->SetGameScene(this);
 
 	enemy_ = std::make_unique<Enemy>();
-	std::vector<Model*> enemyModels = {enemyBodyModel_.get()};
+	std::vector<Model*> enemyModels = {enemyBodyModel_.get(),enemyBodyModel2_.get()};
 	enemy_->Initialize(enemyModels);
 
 	player_->SetEnemy(enemy_.get());
@@ -94,6 +95,8 @@ void GameScene::Draw() {
 	skydome_->Draw(viewProjection_);
 	ground_->Draw(viewProjection_);
 
+	CheckAllCollision();
+
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
@@ -123,9 +126,26 @@ void GameScene::ModelSet() {
 	playerR_armModel_.reset(Model::CreateFromOBJ("float_R_Arm", true));
 
 	enemyBodyModel_.reset(Model::CreateFromOBJ("EnemyBody", true));
+	enemyBodyModel2_.reset(Model::CreateFromOBJ("EnemyBody", true));
 
 }
 
 void GameScene::AddPlayerBullet(PlayerBullet* playerBullet) {
 	playerBullets_.push_back(std::unique_ptr<PlayerBullet>(playerBullet));
+}
+
+void GameScene::CheckAllCollision() {
+
+	AABB enemy = {
+	    enemy_->GetWorldPos() - (enemy_->GetWorlfTransformBase().scale_),
+	    enemy_->GetWorldPos() + (enemy_->GetWorlfTransformBase().scale_)};
+
+	for (const auto& bullet : playerBullets_) {
+		Sphere A = {bullet->GetWorldPos(), bullet->GetWorldTransform().scale_.x};
+		if (IsCollision(enemy, A)) {
+			bullet->OnCollision();
+		}
+
+	}
+
 }

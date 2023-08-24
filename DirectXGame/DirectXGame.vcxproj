@@ -113,6 +113,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GlobalVariables.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Hit.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Hit.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\Vector2.h" />

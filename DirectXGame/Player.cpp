@@ -24,6 +24,7 @@ void Player::Initialize(const std::vector<Model*>& models) {
 	globalVariables->AddItem(groupName, "ArmL Translation", worldTransformL_Arm_.translation_);
 	globalVariables->AddItem(groupName, "ArmR Translation", worldTransformR_Arm_.translation_);
 	globalVariables->AddItem(groupName, "Bullet coolTime", coolTime);
+	
 
 	worldTransformHead_.parent_ = &GetWorldTransformBody();
 	worldTransformL_Arm_.parent_ = &GetWorldTransformBody();
@@ -38,13 +39,12 @@ void Player::Update() {
 	XINPUT_STATE joyState;
 
 	Vec3 move{};
-	const float kSpeed = 0.3f;
 	Vec3 zeroVector{};
 
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
 		move = {(float)joyState.Gamepad.sThumbLX, 0.0f, (float)joyState.Gamepad.sThumbLY};
-		move = move / SHRT_MAX * kSpeed;
+		move = move / SHRT_MAX * speed;
 
 		worldTransformBase_.translation_ += move;
 
@@ -52,7 +52,16 @@ void Player::Update() {
 			rotate = move;
 		}
 
-		worldTransformBase_.rotation_.y = std::atan2(rotate.x, rotate.z);
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_X) {
+			speed = 0.3f;
+			rotate = (enemy_->GetWorldPos() - GetWorldPos()).Normalize();
+			worldTransformBase_.rotation_.y = std::atan2(rotate.x, rotate.z);
+
+		} else {
+			worldTransformBase_.rotation_.y = std::atan2(rotate.x, rotate.z);
+			speed = 0.5f;
+		}
+		
 
 	}
 
@@ -89,6 +98,7 @@ void Player::ApplyGlobalVariables() {
 	worldTransformL_Arm_.translation_ = globalVariables->GetVec3Value(groupName, "ArmL Translation");
 	worldTransformR_Arm_.translation_ = globalVariables->GetVec3Value(groupName, "ArmR Translation");
 	coolTime = globalVariables->GetIntValue(groupName, "Bullet coolTime");
+	
 
 }
 
@@ -101,15 +111,12 @@ void Player::Attack() {
 
 	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_X) {
 
+		
 		const float kBulletSpeed = 1.0f;
 		Vec3 velocity{0.0f, 0.0f, kBulletSpeed};
 
 		velocity = enemy_->GetWorldPos() - GetWorldPos();
 		velocity = velocity.Normalize() * kBulletSpeed;
-
-		rotate = velocity;
-
-		worldTransformBase_.rotation_.y = std::atan2(rotate.x, rotate.z);
 
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(models_[1], GetWorldPos(), velocity);

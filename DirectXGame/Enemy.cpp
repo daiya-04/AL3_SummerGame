@@ -9,9 +9,11 @@ void Enemy::Initialize(const std::vector<Model*>& models) {
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 
 	BaseCharacter::Initialize(models);
+	worldTransformBody2_.Initialize();
 
 	globalVariables->AddItem(groupName, "Base Translation", worldTransformBase_.translation_);
-
+	
+	worldTransformBody2_.translation_ = {0.0f, 7.0f, 0.0f};
 
 }
 
@@ -21,11 +23,13 @@ void Enemy::Update() {
 
 
 	BaseCharacter::Update();
+	worldTransformBody2_.UpdateMatrix();
 }
 
 void Enemy::Draw(const ViewProjection& viewProjection) {
 
 	models_[0]->Draw(worldTransformBody_, viewProjection);
+	models_[1]->Draw(worldTransformBody2_, viewProjection);
 
 }
 

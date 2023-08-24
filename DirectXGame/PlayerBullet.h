@@ -29,5 +29,6 @@ public:
 
 	bool isDead() const { return isDead_; }
 	Vec3 GetWorldPos();
+	const WorldTransform& GetWorldTransform() { return worldTransform_; }
 
 };

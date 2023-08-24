@@ -22,6 +22,8 @@ private:
 	int coolTime = 60;
 	int coolTimer = 0;
 
+	float speed=0.5f;
+
 	GameScene* gameScene_ = nullptr;
 	Enemy* enemy_ = nullptr;
 

@@ -54,6 +54,8 @@ public: // メンバ関数
 
 	void AddPlayerBullet(PlayerBullet* playerBullet);
 
+	void CheckAllCollision();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -77,6 +79,7 @@ private: // メンバ変数
 	//敵
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Model> enemyBodyModel_;
+	std::unique_ptr<Model> enemyBodyModel2_;
 
 	//天球
 	std::unique_ptr<Model> skydomeModel_;
