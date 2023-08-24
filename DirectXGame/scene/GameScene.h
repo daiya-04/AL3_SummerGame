@@ -18,6 +18,7 @@
 #include "Enemy.h"
 #include "PlayerBullet.h"
 #include <list>
+#include "Camera.h"
 
 /// <summary>
 /// ゲームシーン
@@ -89,5 +90,7 @@ private: // メンバ変数
 	std::unique_ptr<Model> groundModel_;
 	std::unique_ptr<Ground> ground_;
 
+	//カメラ
+	std::unique_ptr<Camera> camera_;
 
 };

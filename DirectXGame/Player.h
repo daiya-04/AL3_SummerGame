@@ -19,13 +19,15 @@ private:
 
 	Vec3 rotate;
 
-	int coolTime = 60;
+	int coolTime = 30;
 	int coolTimer = 0;
 
-	float speed=0.5f;
+	float speed = 0.5f;
 
 	GameScene* gameScene_ = nullptr;
 	Enemy* enemy_ = nullptr;
+
+	const ViewProjection* viewProjection_ = nullptr;
 
 public:
 
@@ -41,5 +43,6 @@ public:
 
 	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
 	void SetEnemy(Enemy* enemy) { enemy_ = enemy; }
+	void SetViewProjection(const ViewProjection* viewProjection) { viewProjection_ = viewProjection; }
 
 };

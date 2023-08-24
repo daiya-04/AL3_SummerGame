@@ -38,6 +38,12 @@ void GameScene::Initialize() {
 	ground_ = std::make_unique<Ground>();
 	ground_->Initialize(groundModel_.get());
 
+	camera_ = std::make_unique<Camera>();
+	camera_->Initialize();
+	camera_->SetTarget(&player_->GetWorldTransformBase());
+	
+	player_->SetViewProjection(&camera_->GetViewProjection());
+
 }
 
 void GameScene::Update() {
@@ -57,7 +63,12 @@ void GameScene::Update() {
 	enemy_->Update();
 	skydome_->Update();
 	ground_->Update();
+	camera_->Update();
 
+	viewProjection_.matView = camera_->GetViewProjection().matView;
+	viewProjection_.matProjection = camera_->GetViewProjection().matProjection;
+
+	viewProjection_.TransferMatrix();
 }
 
 void GameScene::Draw() {
@@ -137,8 +148,8 @@ void GameScene::AddPlayerBullet(PlayerBullet* playerBullet) {
 void GameScene::CheckAllCollision() {
 
 	AABB enemy = {
-	    enemy_->GetWorldPos() - (enemy_->GetWorlfTransformBase().scale_),
-	    enemy_->GetWorldPos() + (enemy_->GetWorlfTransformBase().scale_)};
+	    enemy_->GetWorldPos() - (enemy_->GetWorldTransformBase().scale_),
+	    enemy_->GetWorldPos() + (enemy_->GetWorldTransformBase().scale_)};
 
 	for (const auto& bullet : playerBullets_) {
 		Sphere A = {bullet->GetWorldPos(), bullet->GetWorldTransform().scale_.x};

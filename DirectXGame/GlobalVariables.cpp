@@ -1,5 +1,9 @@
-﻿#include "GlobalVariables.h"
+﻿
+
+#include "GlobalVariables.h"
+#ifdef _DEBUG
 #include "Imgui.h"
+#endif // _DEBUG
 #include <json.hpp>
 #include <assert.h>
 #include <fstream>
@@ -20,24 +24,30 @@ void GlobalVariables::CreateGroup(const std::string& groupName) {
 
 void GlobalVariables::Update() {
 
+#ifdef _DEBUG
 	if (!ImGui::Begin("Global Variables", nullptr, ImGuiWindowFlags_MenuBar)) {
 		ImGui::End();
 		return;
 	}
-	if (!ImGui::BeginMenuBar()) { return; }
+	if (!ImGui::BeginMenuBar()) {
+		return;
+	}
 
-	//各グループについて
-	for (std::map<std::string, Group>::iterator itGroup = datas_.begin(); itGroup != datas_.end();++itGroup) {
-		//グループ名を取得
+	// 各グループについて
+	for (std::map<std::string, Group>::iterator itGroup = datas_.begin(); itGroup != datas_.end();
+	     ++itGroup) {
+		// グループ名を取得
 		const std::string& groupName = itGroup->first;
-		//グループの参照を取得
+		// グループの参照を取得
 		Group& group = itGroup->second;
 
-		if (!ImGui::BeginMenu(groupName.c_str())) { continue; }
+		if (!ImGui::BeginMenu(groupName.c_str())) {
+			continue;
+		}
 
-		//各項目について
-		for (std::map<std::string, Item>::iterator itItem = group.begin();
-		     itItem != group.end(); ++itItem) {
+		// 各項目について
+		for (std::map<std::string, Item>::iterator itItem = group.begin(); itItem != group.end();
+		     ++itItem) {
 			// 項目名を取得
 			const std::string& itemName = itItem->first;
 			// 項目の参照を取得
@@ -57,7 +67,7 @@ void GlobalVariables::Update() {
 			}
 		}
 
-		//改行
+		// 改行
 		ImGui::Text("\n");
 
 		if (ImGui::Button("Save")) {
@@ -66,12 +76,15 @@ void GlobalVariables::Update() {
 			MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
 		}
 
-
 		ImGui::EndMenu();
 	}
 
 	ImGui::EndMenuBar();
 	ImGui::End();
+#endif // _DEBUG
+
+
+	
 }
 
 void GlobalVariables::SaveFile(const std::string& groupName) {

@@ -46,6 +46,8 @@ void Player::Update() {
 		move = {(float)joyState.Gamepad.sThumbLX, 0.0f, (float)joyState.Gamepad.sThumbLY};
 		move = move / SHRT_MAX * speed;
 
+		move = TransformNormal(move, MakeRotateYMatrix(viewProjection_->rotation_.y));
+
 		worldTransformBase_.translation_ += move;
 
 		if (move != zeroVector) {
@@ -64,6 +66,15 @@ void Player::Update() {
 		
 
 	}
+
+	const float kMoveLimitX = 90.0f;
+	const float kMoveLimitZ = 90.0f;
+
+	worldTransformBase_.translation_.x = max(worldTransformBase_.translation_.x, -kMoveLimitX);
+	worldTransformBase_.translation_.x = min(worldTransformBase_.translation_.x, kMoveLimitX);
+	worldTransformBase_.translation_.z = max(worldTransformBase_.translation_.z, -kMoveLimitZ);
+	worldTransformBase_.translation_.z = min(worldTransformBase_.translation_.z, kMoveLimitZ);
+
 
 	if (coolTimer > 0) {
 		coolTimer--;
@@ -112,7 +123,7 @@ void Player::Attack() {
 	if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_X) {
 
 		
-		const float kBulletSpeed = 1.0f;
+		const float kBulletSpeed = 3.0f;
 		Vec3 velocity{0.0f, 0.0f, kBulletSpeed};
 
 		velocity = enemy_->GetWorldPos() - GetWorldPos();
