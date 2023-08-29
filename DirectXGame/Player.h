@@ -14,9 +14,8 @@ class Player : public BaseCharacter {
 private:
 
 	WorldTransform worldTransformHead_;
-	WorldTransform worldTransformL_Arm_;
-	WorldTransform worldTransformR_Arm_;
 
+	Vec3 size = {1.0f, 2.0f, 1.0f};
 	Vec3 rotate;
 
 	int coolTime = 30;
@@ -41,8 +40,12 @@ public:
 
 	void Attack();
 
+	void OnCollision();
+
 	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
 	void SetEnemy(Enemy* enemy) { enemy_ = enemy; }
 	void SetViewProjection(const ViewProjection* viewProjection) { viewProjection_ = viewProjection; }
+
+	Vec3 GetSize() { return size; }
 
 };

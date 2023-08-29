@@ -17,6 +17,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "PlayerBullet.h"
+#include "EnemyBullet.h"
 #include <list>
 #include "Camera.h"
 
@@ -55,6 +56,8 @@ public: // メンバ関数
 
 	void AddPlayerBullet(PlayerBullet* playerBullet);
 
+	void AddEnemyBullet(EnemyBullet* enemyBullet);
+
 	void CheckAllCollision();
 
 private: // メンバ変数
@@ -72,15 +75,19 @@ private: // メンバ変数
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Model> playerBodyModel_;
 	std::unique_ptr<Model> playerHeadModel_;
-	std::unique_ptr<Model> playerL_armModel_;
-	std::unique_ptr<Model> playerR_armModel_;
 
 	std::list<std::unique_ptr<PlayerBullet>> playerBullets_;
+	std::unique_ptr<Model> playerBulletModel_;
 
 	//敵
 	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<Model> enemyBodyModel_;
 	std::unique_ptr<Model> enemyBodyModel2_;
+	std::unique_ptr<Model> enemyBodyModel3_;
+	std::unique_ptr<Model> enemyHeadModel_;
+
+	std::list<std::unique_ptr<EnemyBullet>> enemyBullets_;
+	std::unique_ptr<Model> enemyBulletModel_;
 
 	//天球
 	std::unique_ptr<Model> skydomeModel_;

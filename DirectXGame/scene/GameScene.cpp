@@ -21,14 +21,19 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	std::vector<Model*> playerModels = {
 	    playerBodyModel_.get(),playerHeadModel_.get(),
-	    playerL_armModel_.get(),playerR_armModel_.get(),
+		playerBulletModel_.get()
 	};
 	player_->Initialize(playerModels);
 	player_->SetGameScene(this);
 
 	enemy_ = std::make_unique<Enemy>();
-	std::vector<Model*> enemyModels = {enemyBodyModel_.get(),enemyBodyModel2_.get()};
+	std::vector<Model*> enemyModels = {
+		enemyBodyModel_.get(),enemyBodyModel2_.get(),
+		enemyBodyModel3_.get(),enemyHeadModel_.get(),
+		enemyBulletModel_.get()
+	};
 	enemy_->Initialize(enemyModels);
+	enemy_->SetGameScene(this);
 
 	player_->SetEnemy(enemy_.get());
 
@@ -55,8 +60,18 @@ void GameScene::Update() {
 		return false;
 	});
 
+	enemyBullets_.remove_if([](const std::unique_ptr<EnemyBullet>& bullet) {
+		if (bullet->IsDead()) {
+			return true;
+		}
+		return false;
+	});
+
 	player_->Update();
 	for (const auto& bullet : playerBullets_) {
+		bullet->Update();
+	}
+	for (const auto& bullet : enemyBullets_) {
 		bullet->Update();
 	}
 	
@@ -102,6 +117,9 @@ void GameScene::Draw() {
 	for (const auto& bullet : playerBullets_) {
 		bullet->Draw(viewProjection_);
 	}
+	for (const auto& bullet : enemyBullets_) {
+		bullet->Draw(viewProjection_);
+	}
 	enemy_->Draw(viewProjection_);
 	skydome_->Draw(viewProjection_);
 	ground_->Draw(viewProjection_);
@@ -133,30 +151,65 @@ void GameScene::ModelSet() {
 
 	playerBodyModel_.reset(Model::CreateFromOBJ("float_Body", true));
 	playerHeadModel_.reset(Model::CreateFromOBJ("float_Head", true));
-	playerL_armModel_.reset(Model::CreateFromOBJ("float_L_Arm", true));
-	playerR_armModel_.reset(Model::CreateFromOBJ("float_R_Arm", true));
+
+	playerBulletModel_.reset(Model::CreateFromOBJ("bullet", true));
 
 	enemyBodyModel_.reset(Model::CreateFromOBJ("EnemyBody", true));
 	enemyBodyModel2_.reset(Model::CreateFromOBJ("EnemyBody", true));
+	enemyBodyModel3_.reset(Model::CreateFromOBJ("EnemyBody", true));
+	enemyHeadModel_.reset(Model::CreateFromOBJ("EnemyBody", true));
 
+	enemyBulletModel_.reset(Model::CreateFromOBJ("enemyBullet", true));
 }
 
 void GameScene::AddPlayerBullet(PlayerBullet* playerBullet) {
 	playerBullets_.push_back(std::unique_ptr<PlayerBullet>(playerBullet));
 }
 
+void GameScene::AddEnemyBullet(EnemyBullet* enemyBullet) {
+	enemyBullets_.push_back(std::unique_ptr<EnemyBullet>(enemyBullet));
+}
+
 void GameScene::CheckAllCollision() {
 
 	AABB enemy = {
-	    enemy_->GetWorldPos() - (enemy_->GetWorldTransformBase().scale_),
-	    enemy_->GetWorldPos() + (enemy_->GetWorldTransformBase().scale_)};
+	    enemy_->GetWorldPos() - enemy_->GetSize(),
+		enemy_->GetWorldPos() + enemy_->GetSize()
+	};
 
+	AABB player = {
+	    player_->GetWorldPos() - player_->GetSize(), 
+		player_->GetWorldPos() + player_->GetSize()
+	};
+
+	//敵と自弾との衝突判定
 	for (const auto& bullet : playerBullets_) {
-		Sphere A = {bullet->GetWorldPos(), bullet->GetWorldTransform().scale_.x};
-		if (IsCollision(enemy, A)) {
+		Sphere playerBullet = {bullet->GetWorldPos(), 1.0f};
+		if (IsCollision(enemy, playerBullet)) {
 			bullet->OnCollision();
+			enemy_->OnCollision();
 		}
+	}
 
+	//プレイヤーと敵弾との衝突判定
+	for (const auto& bullet : enemyBullets_) {
+		Sphere enemyBullet = {bullet->GetWorldPos(), 1.0f};
+		if (IsCollision(player, enemyBullet)) {
+			bullet->OnCollision();
+			player_->OnCollision();
+		}
+	}
+
+	//自弾と敵弾との衝突判定
+	for (const auto& bulletA : playerBullets_) {
+		Sphere playerBullet = {bulletA->GetWorldPos(), 1.0f};
+		for (const auto& bulletB : enemyBullets_) {
+			Sphere enemyBullet = {bulletB->GetWorldPos(), 1.0f};
+			if (IsCollision(playerBullet, enemyBullet)) {
+				bulletA->OnCollision();
+				bulletB->OnCollision();
+			}
+		}
 	}
 
 }

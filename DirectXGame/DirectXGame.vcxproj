@@ -112,6 +112,7 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
     <ClCompile Include="GlobalVariables.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Hit.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBullet.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Hit.h" />
