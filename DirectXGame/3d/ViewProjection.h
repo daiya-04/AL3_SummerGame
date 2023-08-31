@@ -22,7 +22,7 @@ public:
 	// X,Y,Z軸回りのローカル回転角
 	Vec3 rotation_ = {0.2f, 0, 0};
 	// ローカル座標
-	Vec3 translation_ = {0, 30, -130};
+	Vec3 translation_ = {0.0f, 15.0f, -40.0f};
 #pragma endregion
 
 #pragma region 射影行列の設定

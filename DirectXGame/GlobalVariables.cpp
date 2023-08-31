@@ -55,11 +55,11 @@ void GlobalVariables::Update() {
 			// int32_t型の値を保持していれば
 			if (std::holds_alternative<int32_t>(item)) {
 				int32_t* ptr = std::get_if<int32_t>(&item);
-				ImGui::SliderInt(itemName.c_str(), ptr, 0, 100);
+				ImGui::SliderInt(itemName.c_str(), ptr, 0, 1000);
 				// float型の値を保持していれば
 			} else if (std::holds_alternative<float>(item)) {
 				float* ptr = std::get_if<float>(&item);
-				ImGui::SliderFloat(itemName.c_str(), ptr, 0.0f, 100.0f);
+				ImGui::SliderFloat(itemName.c_str(), ptr, 0.0f, 1000.0f);
 				// Vec3型の値を保持していれば
 			} else if (std::holds_alternative<Vec3>(item)) {
 				Vec3* ptr = std::get_if<Vec3>(&item);

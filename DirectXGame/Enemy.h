@@ -35,8 +35,8 @@ private:
 	Behavior behavior_ = Behavior::kRoot;
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
-	int maxHp = 40;
-	int hp = maxHp;
+	int maxHp = 200;
+	int hp_ = maxHp;
 
 	Vec3 size = {1.5f, 1.0f, 1.5f};
 
@@ -44,13 +44,13 @@ private:
 	Vec3 fallStart{};
 	Vec3 fallEnd{};
 
-	int bulletCoolTime = 10;
+	int bulletCoolTime = 15;
 	int bulletCoolTimer = 0;
 
-	int attackCoolTime = 60 * 10;
+	int attackCoolTime = 60 * 5;
 	int attackCoolTimer = attackCoolTime;
 
-	int attackTime = 60 * 10;
+	int attackTime = 60 * 5;
 	int attackTimer = attackTime;
 
 	GameScene* gameScene_ = nullptr;
@@ -79,8 +79,11 @@ public:
 
 	void Falling(Vec3& translation);
 
+	void SceneInitialize();
+
 	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
 
 	Vec3 GetSize() { return size; }
+	int GetHP() { return hp_; }
 
 };

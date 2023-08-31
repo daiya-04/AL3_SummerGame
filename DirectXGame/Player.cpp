@@ -13,7 +13,7 @@ void Player::Initialize(const std::vector<Model*>& models) {
 	BaseCharacter::Initialize(models);
 	worldTransformHead_.Initialize();
 
-	worldTransformBase_.translation_ = {0.0f, 0.0f, -70.0f};
+	worldTransformBase_.translation_ = startPos;
 	worldTransformBase_.scale_ = {0.5f, 0.5f, 0.5f};
 
 	rotate = {};
@@ -21,6 +21,9 @@ void Player::Initialize(const std::vector<Model*>& models) {
 	
 	globalVariables->AddItem(groupName, "Head Translation", worldTransformHead_.translation_);
 	globalVariables->AddItem(groupName, "Bullet coolTime", coolTime);
+	globalVariables->AddItem(groupName, "StartPosition", startPos);
+	globalVariables->AddItem(groupName, "Size", size);
+	globalVariables->AddItem(groupName, "HP", maxHp);
 	
 
 	worldTransformHead_.parent_ = &GetWorldTransformBody();
@@ -78,6 +81,9 @@ void Player::Update() {
 	}
 	Attack();
 	
+	if (hp_ <= 0) {
+		gameScene_->ToGameOverScene();
+	}
 
 	BaseCharacter::Update();
 	worldTransformHead_.UpdateMatrix();
@@ -99,6 +105,9 @@ void Player::ApplyGlobalVariables() {
 	const char* groupName = "Player";
 	worldTransformHead_.translation_ = globalVariables->GetVec3Value(groupName, "Head Translation");
 	coolTime = globalVariables->GetIntValue(groupName, "Bullet coolTime");
+	startPos = globalVariables->GetVec3Value(groupName, "StartPosition");
+	size = globalVariables->GetVec3Value(groupName, "Size");
+	maxHp = globalVariables->GetIntValue(groupName, "HP");
 	
 
 }
@@ -129,6 +138,15 @@ void Player::Attack() {
 
 void Player::OnCollision() {
 
+	hp_ -= 1;
 
+}
+
+void Player::SceneInitialize() {
+
+	hp_ = maxHp;
+	worldTransformBase_.translation_ = startPos;
+	rotate = {};
+	coolTimer = coolTime;
 
 }

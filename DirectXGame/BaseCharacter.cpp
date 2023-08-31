@@ -32,7 +32,7 @@ Vec3 BaseCharacter::GetWorldPos() {
 	Vec3 worldPos{};
 
 	worldPos.x = worldTransformBase_.matWorld_.m[3][0];
-	worldPos.y = worldTransformBase_.matWorld_.m[3][1] + 4.0f;
+	worldPos.y = worldTransformBase_.matWorld_.m[3][1] + 3.0f;
 	worldPos.z = worldTransformBase_.matWorld_.m[3][2];
 
 	return worldPos;

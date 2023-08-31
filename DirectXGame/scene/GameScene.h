@@ -60,6 +60,10 @@ public: // メンバ関数
 
 	void CheckAllCollision();
 
+	void ToClearScene();
+
+	void ToGameOverScene();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -69,7 +73,19 @@ private: // メンバ変数
 	/// ゲームシーン用
 	/// </summary>
 	
+	XINPUT_STATE preJoyState{};
+	
+	enum class Scene {
+		Title,
+		InGame,
+		Clear,
+		GameOver,
+	};
+
+	Scene scene_ = Scene::Title;
+
 	ViewProjection viewProjection_;
+	
 
 	//プレイヤー
 	std::unique_ptr<Player> player_;
@@ -81,7 +97,7 @@ private: // メンバ変数
 
 	//敵
 	std::unique_ptr<Enemy> enemy_;
-	std::unique_ptr<Model> enemyBodyModel_;
+	std::unique_ptr<Model> enemyBodyModel1_;
 	std::unique_ptr<Model> enemyBodyModel2_;
 	std::unique_ptr<Model> enemyBodyModel3_;
 	std::unique_ptr<Model> enemyHeadModel_;
@@ -100,4 +116,26 @@ private: // メンバ変数
 	//カメラ
 	std::unique_ptr<Camera> camera_;
 
+	uint32_t titleTexture_ = 0u;
+	uint32_t button_BTexture_ = 0u;
+	uint32_t enemyHpTexture_ = 0u;
+	uint32_t playerHpIconTexture_ = 0u;
+	uint32_t gameOverTexture_ = 0u;
+	uint32_t gameClearTexture_ = 0u;
+
+
+	std::unique_ptr<Sprite> title_;
+	std::unique_ptr<Sprite> button_B_;
+	std::unique_ptr<Sprite> enemyHp_;
+	std::unique_ptr<Sprite> player_hp_icon1_;
+	std::unique_ptr<Sprite> player_hp_icon2_;
+	std::unique_ptr<Sprite> player_hp_icon3_;
+	std::unique_ptr<Sprite> player_hp_icon4_;
+	std::unique_ptr<Sprite> player_hp_icon5_;
+	std::unique_ptr<Sprite> gameOverText_;
+	std::unique_ptr<Sprite> gameClearText_;
+
+	Vector2 size_ = {800.0f, 25.0f};
+
+	int count_ = 0;
 };

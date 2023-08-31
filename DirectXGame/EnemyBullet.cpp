@@ -7,6 +7,7 @@ void EnemyBullet::Initialize(Model* model, const Vec3& position, const Vec3& vel
 	model_ = model;
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
+	worldTransform_.scale_ = {0.7f, 0.7f, 0.7f};
 	velocity_ = velocity;
 
 }
