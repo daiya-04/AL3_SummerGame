@@ -283,4 +283,6 @@ void Enemy::SceneInitialize() {
 	worldTransformBody3_.rotation_.y = 0.0f;
 	worldTransformHead_.rotation_.y = 0.0f;
 
+	stage_ = Stage::Stage1;
+
 }
