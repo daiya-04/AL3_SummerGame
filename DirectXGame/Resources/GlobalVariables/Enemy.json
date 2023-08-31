@@ -1,0 +1,18 @@
+{
+    "Enemy": {
+        "Attack coolTime": 240,
+        "AttackTime": 300,
+        "Base Translation": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "Bullet coolTime": 10,
+        "HP": 200,
+        "Size": [
+            1.5,
+            1.0,
+            1.5
+        ]
+    }
+}

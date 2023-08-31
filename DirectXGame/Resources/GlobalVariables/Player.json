@@ -1,0 +1,21 @@
+{
+    "Player": {
+        "Bullet coolTime": 15,
+        "HP": 5,
+        "Head Translation": [
+            0.0,
+            6.0,
+            0.0
+        ],
+        "Size": [
+            1.0,
+            2.0,
+            1.0
+        ],
+        "StartPosition": [
+            0.0,
+            0.0,
+            -70.0
+        ]
+    }
+}

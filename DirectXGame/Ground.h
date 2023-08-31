@@ -3,14 +3,14 @@
 #include "ViewProjection.h"
 #include "Model.h"
 
-class Skydome {
+
+class Ground {
 private:
 
 	//ワールド変換データ
 	WorldTransform worldTransform_;
 	//モデルデータ
 	Model* model_ = nullptr;
-
 
 public:
 
