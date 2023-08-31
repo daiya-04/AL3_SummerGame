@@ -24,6 +24,7 @@ void GameScene::Initialize() {
 	playerHpIconTexture_ = TextureManager::Load("player_HP_icon.png");
 	gameOverTexture_ = TextureManager::Load("GameOver.png");
 	gameClearTexture_ = TextureManager::Load("GameClear.png");
+	shot_X_Texture_ = TextureManager::Load("Shot_X.png");
 	
 	player_ = std::make_unique<Player>();
 	std::vector<Model*> playerModels = {
@@ -66,7 +67,8 @@ void GameScene::Initialize() {
 	player_hp_icon5_.reset(Sprite::Create(playerHpIconTexture_, {220, 20}));
 	gameOverText_.reset(Sprite::Create(gameOverTexture_, {0, 0}));
 	gameClearText_.reset(Sprite::Create(gameClearTexture_, {0, 0}));
-	
+	shot_X_.reset(Sprite::Create(shot_X_Texture_, {20, 100}));
+
 }
 
 void GameScene::Update() {
@@ -225,6 +227,7 @@ void GameScene::Draw() {
 		if (player_->GetHP() >= 3) { player_hp_icon3_->Draw(); }
 		if (player_->GetHP() >= 4) { player_hp_icon4_->Draw(); }
 		if (player_->GetHP() >= 5) { player_hp_icon5_->Draw(); }
+		shot_X_->Draw();
 	}
 
 	if (scene_ == Scene::Clear) {

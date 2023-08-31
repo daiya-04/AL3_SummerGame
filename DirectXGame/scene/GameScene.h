@@ -122,6 +122,7 @@ private: // メンバ変数
 	uint32_t playerHpIconTexture_ = 0u;
 	uint32_t gameOverTexture_ = 0u;
 	uint32_t gameClearTexture_ = 0u;
+	uint32_t shot_X_Texture_ = 0u;
 
 
 	std::unique_ptr<Sprite> title_;
@@ -134,6 +135,7 @@ private: // メンバ変数
 	std::unique_ptr<Sprite> player_hp_icon5_;
 	std::unique_ptr<Sprite> gameOverText_;
 	std::unique_ptr<Sprite> gameClearText_;
+	std::unique_ptr<Sprite> shot_X_;
 
 	Vector2 size_ = {800.0f, 25.0f};
 
